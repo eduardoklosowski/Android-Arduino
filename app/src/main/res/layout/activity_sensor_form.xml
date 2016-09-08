@@ -79,11 +79,23 @@
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/text"
                     android:text="Tipo:" />
-                <EditText
+                <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:inputType="text" />
+                    android:checkedButton="@+id/radio_1">
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/radio_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Digital" />
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/radio_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Analógico" />
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout
