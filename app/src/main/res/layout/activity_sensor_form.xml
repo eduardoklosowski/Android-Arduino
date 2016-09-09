@@ -62,6 +62,7 @@
                     android:textSize="@dimen/text"
                     android:text="Arduino:" />
                 <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinner1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
