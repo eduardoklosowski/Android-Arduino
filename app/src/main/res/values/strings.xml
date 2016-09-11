@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aplicativo</string>
+    <string name="app_name">Sensores de Arduino</string>
 
     <string name="add">Adicionar</string>
     <string name="save">Salvar</string>
