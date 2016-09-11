@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Arduino</string>
+    <string name="app_name">Aplicativo</string>
+
+    <string name="add">Adicionar</string>
+    <string name="save">Salvar</string>
+
+    <string name="arduino">Arduino</string>
+    <string name="arduinos">Arduinos</string>
+
+    <string name="sensor">Sensor</string>
+    <string name="sensors">Sensores</string>
+
+    <string name="field_arduino">Arduino:</string>
+    <string name="field_name">Nome:</string>
+    <string name="field_port">Porta:</string>
+    <string name="field_type">Tipo:</string>
+    <string name="field_url">URL:</string>
+
+    <string name="value_analogical">Analógico</string>
+    <string name="value_digital">Digital</string>
 </resources>

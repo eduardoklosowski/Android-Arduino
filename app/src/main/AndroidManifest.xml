@@ -23,10 +23,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ArduinoListActivity" />
         <activity android:name=".ArduinoFormActivity" />
+        <activity android:name=".ArduinoListActivity" />
         <activity android:name=".SensorFormActivity" />
-        <activity android:name=".SensorListActivity"></activity>
+        <activity android:name=".SensorListActivity" />
     </application>
 
 </manifest>

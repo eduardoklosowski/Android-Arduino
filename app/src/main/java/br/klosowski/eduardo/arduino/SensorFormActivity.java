@@ -1,40 +1,66 @@
 package br.klosowski.eduardo.arduino;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SensorFormActivity extends AppCompatActivity {
-
-    private AppCompatSpinner mSpinner;
+    private EditText editName;
+    private AppCompatSpinner editArduino;
+    private RadioGroup editType;
+    private EditText editPort;
+    private Button buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_form);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Sensor");
+        toolbar.setTitle(R.string.sensor);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-        mSpinner = (AppCompatSpinner) findViewById(R.id.spinner1);
-        List<String> list = new ArrayList<>();
-        list.add("Exemplo Android 1");
-        list.add("Exemplo Android 2");
+        editName = (EditText) findViewById(R.id.name);
+        editArduino = (AppCompatSpinner) findViewById(R.id.arduino);
+        editArduino.setAdapter(new ArrayAdapter<ArduinoItem>(this,
+                android.R.layout.simple_spinner_item,
+                getArduinoList()));
+        editType = (RadioGroup) findViewById(R.id.type);
+        editPort = (EditText) findViewById(R.id.port);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_item, list);
-
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mSpinner.setAdapter(dataAdapter);
+        buttonSave = (Button) findViewById(R.id.save);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SensorItem sensor = new SensorItem();
+                sensor.setName(editName.getText().toString());
+                sensor.setArduino((ArduinoItem) editArduino.getSelectedItem());
+                switch (editType.getCheckedRadioButtonId()) {
+                    case R.id.type_digital:
+                        sensor.setType(ArduinoType.Digital);
+                        break;
+                    case R.id.type_analogical:
+                        sensor.setType(ArduinoType.Analogical);
+                        break;
+                }
+                sensor.setPort(Integer.parseInt(editPort.getText().toString()));
+            }
+        });
     }
 
     @Override
@@ -45,5 +71,23 @@ public class SensorFormActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private List<ArduinoItem> getArduinoList() {
+        List<ArduinoItem> list = new ArrayList<>();
+
+        ArduinoItem a = new ArduinoItem();
+        a.setId(1);
+        a.setName("Arduino 1");
+        a.setUrl("http://localhost/");
+        list.add(a);
+
+        a = new ArduinoItem();
+        a.setId(2);
+        a.setName("Arduino 2");
+        a.setUrl("http://localhost:8080/");
+        list.add(a);
+
+        return list;
     }
 }

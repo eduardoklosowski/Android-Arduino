@@ -1,28 +1,31 @@
 package br.klosowski.eduardo.arduino;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Programa");
+        toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
+
+        RecyclerView list = (RecyclerView) findViewById(R.id.list);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(new MainItemRecyclerAdapter(this, getSensorList()));
     }
 
     @Override
@@ -46,5 +49,30 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private List<SensorItem> getSensorList() {
+        List<SensorItem> list = new ArrayList<>();
+
+        ArduinoItem a = new ArduinoItem();
+        a.setName("Arduino");
+
+        SensorItem s = new SensorItem();
+        s.setId(1);
+        s.setName("Sensor 1");
+        s.setArduino(a);
+        s.setType(ArduinoType.Digital);
+        s.setPort(0);
+        list.add(s);
+
+        s = new SensorItem();
+        s.setId(2);
+        s.setName("Sensor 2");
+        s.setArduino(a);
+        s.setType(ArduinoType.Digital);
+        s.setPort(0);
+        list.add(s);
+
+        return list;
     }
 }

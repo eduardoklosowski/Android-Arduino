@@ -3,6 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorTextDark">#FFFFFF</color>
+    <color name="colorPopupPrimary">#404040</color>
+
     <color name="colorBackground">#C0C0C0</color>
     <color name="colorCard">#FFFFFF</color>
     <color name="colorText">#000000</color>
