@@ -11,6 +11,7 @@
     <string name="sensors">Sensores</string>
 
     <string name="field_arduino">Arduino:</string>
+    <string name="field_direction">Direção:</string>
     <string name="field_name">Nome:</string>
     <string name="field_port">Porta:</string>
     <string name="field_type">Tipo:</string>
@@ -18,4 +19,6 @@
 
     <string name="value_analogical">Analógico</string>
     <string name="value_digital">Digital</string>
+    <string name="value_input">Entrada</string>
+    <string name="value_output">Saída</string>
 </resources>

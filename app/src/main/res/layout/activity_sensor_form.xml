@@ -71,6 +71,28 @@
 
             <TableRow>
                 <TextView
+                    android:text="@string/field_direction"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:gravity="end" />
+                <RadioGroup
+                    android:id="@+id/direction"
+                    android:layout_weight="1"
+                    android:checkedButton="@+id/direction_input">
+                    <RadioButton
+                        android:id="@+id/direction_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/value_input" />
+                    <RadioButton
+                        android:id="@+id/direction_output"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/value_output" />
+                </RadioGroup>
+            </TableRow>
+
+            <TableRow>
+                <TextView
                     android:text="@string/field_port"
                     android:textAppearance="?android:textAppearanceLarge"
                     android:gravity="end" />

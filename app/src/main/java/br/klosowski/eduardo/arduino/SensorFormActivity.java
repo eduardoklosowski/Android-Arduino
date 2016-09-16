@@ -19,6 +19,7 @@ public class SensorFormActivity extends AppCompatActivity {
     private EditText editName;
     private AppCompatSpinner editArduino;
     private RadioGroup editType;
+    private RadioGroup editDirection;
     private EditText editPort;
     private Button buttonSave;
 
@@ -41,6 +42,7 @@ public class SensorFormActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,
                 getArduinoList()));
         editType = (RadioGroup) findViewById(R.id.type);
+        editDirection = (RadioGroup) findViewById(R.id.direction);
         editPort = (EditText) findViewById(R.id.port);
 
         buttonSave = (Button) findViewById(R.id.save);
@@ -56,6 +58,14 @@ public class SensorFormActivity extends AppCompatActivity {
                         break;
                     case R.id.type_analogical:
                         sensor.setType(ArduinoType.Analogical);
+                        break;
+                }
+                switch (editDirection.getCheckedRadioButtonId()) {
+                    case R.id.direction_input:
+                        sensor.setDirection(ArduinoDirection.Input);
+                        break;
+                    case R.id.direction_output:
+                        sensor.setDirection(ArduinoDirection.Output);
                         break;
                 }
                 sensor.setPort(Integer.parseInt(editPort.getText().toString()));

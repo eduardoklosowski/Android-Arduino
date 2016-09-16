@@ -5,6 +5,7 @@ public class SensorItem {
     private String name;
     private ArduinoItem arduino;
     private ArduinoType type;
+    private ArduinoDirection direction;
     private int port;
 
     public String toString() {
@@ -41,6 +42,14 @@ public class SensorItem {
 
     public void setType(ArduinoType type) {
         this.type = type;
+    }
+
+    public ArduinoDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(ArduinoDirection direction) {
+        this.direction = direction;
     }
 
     public int getPort() {
