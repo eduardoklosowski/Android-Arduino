@@ -14,6 +14,8 @@ public class ArduinoFormActivity extends AppCompatActivity {
     private EditText editUrl;
     private Button buttonSave;
 
+    private ArduinoItemDAO itemDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,8 @@ public class ArduinoFormActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        itemDAO = new ArduinoItemDAO(this);
+
         editName = (EditText) findViewById(R.id.name);
         editUrl = (EditText) findViewById(R.id.url);
 
@@ -37,6 +41,8 @@ public class ArduinoFormActivity extends AppCompatActivity {
                 ArduinoItem arduino = new ArduinoItem();
                 arduino.setName(editName.getText().toString());
                 arduino.setUrl(editUrl.getText().toString());
+                itemDAO.add(arduino);
+                onBackPressed();
             }
         });
     }

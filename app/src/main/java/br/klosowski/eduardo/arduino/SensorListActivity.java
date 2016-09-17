@@ -11,10 +11,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SensorListActivity extends AppCompatActivity {
+    private SensorItemDAO itemDAO;
+    private SensorItemRecyclerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +28,12 @@ public class SensorListActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        itemDAO = new SensorItemDAO(this);
+        adapter = new SensorItemRecyclerAdapter(this, itemDAO.getAll());
+
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new SensorItemRecyclerAdapter(this, getSensorList()));
+        list.setAdapter(adapter);
     }
 
     @Override
@@ -54,28 +57,9 @@ public class SensorListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<SensorItem> getSensorList() {
-        List<SensorItem> list = new ArrayList<>();
-
-        ArduinoItem a = new ArduinoItem();
-        a.setName("Arduino");
-
-        SensorItem s = new SensorItem();
-        s.setId(1);
-        s.setName("Sensor 1");
-        s.setArduino(a);
-        s.setType(ArduinoType.Digital);
-        s.setPort(0);
-        list.add(s);
-
-        s = new SensorItem();
-        s.setId(2);
-        s.setName("Sensor 2");
-        s.setArduino(a);
-        s.setType(ArduinoType.Digital);
-        s.setPort(0);
-        list.add(s);
-
-        return list;
+    public void updateList() {
+        adapter.clear();
+        adapter.addAll(itemDAO.getAll());
+        adapter.notifyDataSetChanged();
     }
 }

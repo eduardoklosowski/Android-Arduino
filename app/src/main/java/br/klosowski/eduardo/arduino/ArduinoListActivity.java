@@ -11,10 +11,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArduinoListActivity extends AppCompatActivity {
+    private ArduinoItemDAO itemDAO;
+    private ArduinoItemRecyclerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +28,12 @@ public class ArduinoListActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        itemDAO = new ArduinoItemDAO(this);
+        adapter = new ArduinoItemRecyclerAdapter(this, itemDAO.getAll());
+
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new ArduinoItemRecyclerAdapter(this, getArduinoList()));
+        list.setAdapter(adapter);
     }
 
     @Override
@@ -54,21 +57,9 @@ public class ArduinoListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<ArduinoItem> getArduinoList() {
-        List<ArduinoItem> list = new ArrayList<>();
-
-        ArduinoItem a = new ArduinoItem();
-        a.setId(1);
-        a.setName("Arduino 1");
-        a.setUrl("http://localhost/");
-        list.add(a);
-
-        a = new ArduinoItem();
-        a.setId(2);
-        a.setName("Arduino 2");
-        a.setUrl("http://localhost:8080/");
-        list.add(a);
-
-        return list;
+    public void updateList() {
+        adapter.clear();
+        adapter.addAll(itemDAO.getAll());
+        adapter.notifyDataSetChanged();
     }
 }

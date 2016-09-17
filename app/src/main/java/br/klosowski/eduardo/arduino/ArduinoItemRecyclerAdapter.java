@@ -60,4 +60,12 @@ public class ArduinoItemRecyclerAdapter extends RecyclerView.Adapter<ArduinoItem
     public ArduinoItem getItem(int position) {
         return list.get(position);
     }
+
+    public void clear() {
+        list.clear();
+    }
+
+    public void addAll(List<ArduinoItem> list) {
+        list.addAll(list);
+    }
 }

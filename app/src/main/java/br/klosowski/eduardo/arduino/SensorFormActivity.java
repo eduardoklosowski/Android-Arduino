@@ -23,6 +23,9 @@ public class SensorFormActivity extends AppCompatActivity {
     private EditText editPort;
     private Button buttonSave;
 
+    private SensorItemDAO itemDAO;
+    private ArduinoItemDAO arduinoItemDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +39,14 @@ public class SensorFormActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        itemDAO = new SensorItemDAO(this);
+        arduinoItemDAO = new ArduinoItemDAO(this);
+
         editName = (EditText) findViewById(R.id.name);
         editArduino = (AppCompatSpinner) findViewById(R.id.arduino);
-        editArduino.setAdapter(new ArrayAdapter<ArduinoItem>(this,
+        editArduino.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
-                getArduinoList()));
+                arduinoItemDAO.getAll()));
         editType = (RadioGroup) findViewById(R.id.type);
         editDirection = (RadioGroup) findViewById(R.id.direction);
         editPort = (EditText) findViewById(R.id.port);
@@ -69,6 +75,8 @@ public class SensorFormActivity extends AppCompatActivity {
                         break;
                 }
                 sensor.setPort(Integer.parseInt(editPort.getText().toString()));
+                itemDAO.add(sensor);
+                onBackPressed();
             }
         });
     }
@@ -81,23 +89,5 @@ public class SensorFormActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private List<ArduinoItem> getArduinoList() {
-        List<ArduinoItem> list = new ArrayList<>();
-
-        ArduinoItem a = new ArduinoItem();
-        a.setId(1);
-        a.setName("Arduino 1");
-        a.setUrl("http://localhost/");
-        list.add(a);
-
-        a = new ArduinoItem();
-        a.setId(2);
-        a.setName("Arduino 2");
-        a.setUrl("http://localhost:8080/");
-        list.add(a);
-
-        return list;
     }
 }

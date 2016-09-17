@@ -60,4 +60,12 @@ public class SensorItemRecyclerAdapter extends RecyclerView.Adapter<SensorItemVi
     public SensorItem getItem(int position) {
         return list.get(position);
     }
+
+    public void clear() {
+        list.clear();
+    }
+
+    public void addAll(List<SensorItem> list) {
+        list.addAll(list);
+    }
 }
