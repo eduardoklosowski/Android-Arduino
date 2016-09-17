@@ -2,7 +2,9 @@
     <string name="app_name">Sensores de Arduino</string>
 
     <string name="add">Adicionar</string>
+    <string name="no">Não</string>
     <string name="save">Salvar</string>
+    <string name="yes">Sim</string>
 
     <string name="arduino">Arduino</string>
     <string name="arduinos">Arduinos</string>
@@ -21,4 +23,6 @@
     <string name="value_digital">Digital</string>
     <string name="value_input">Entrada</string>
     <string name="value_output">Saída</string>
+
+    <string name="msg_confirm_delete">Deseja realmente deletar?</string>
 </resources>
