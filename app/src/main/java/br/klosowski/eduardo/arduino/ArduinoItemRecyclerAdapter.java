@@ -2,7 +2,6 @@ package br.klosowski.eduardo.arduino;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,8 @@ import java.util.List;
 public class ArduinoItemRecyclerAdapter extends RecyclerView.Adapter<ArduinoItemViewHolder> {
     private List<ArduinoItem> list;
     private Context context;
+    private OnItemEditedListener mOnItemEdited;
+    private OnItemDeletedListener mOnItemDeleted;
 
     public ArduinoItemRecyclerAdapter(Context context, List<ArduinoItem> list) {
         this.list = list;
@@ -35,8 +36,9 @@ public class ArduinoItemRecyclerAdapter extends RecyclerView.Adapter<ArduinoItem
         holder.buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ArduinoFormActivity.class);
-                context.startActivity(intent);
+                if (mOnItemEdited != null) {
+                    mOnItemEdited.onItemEdited(item);
+                }
             }
         });
 
@@ -46,10 +48,24 @@ public class ArduinoItemRecyclerAdapter extends RecyclerView.Adapter<ArduinoItem
                 new ConfirmDeleteDialog(context, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        ArduinoItemDAO itemDAO = new ArduinoItemDAO(context);
+                        itemDAO.delete(item);
+
+                        if (mOnItemDeleted != null) {
+                            mOnItemDeleted.onItemDeleted(item);
+                        }
                     }
                 }).make().show();
             }
         });
+    }
+
+    public void setOnItemEdited(OnItemEditedListener onItemEdited) {
+        mOnItemEdited = onItemEdited;
+    }
+
+    public void setOnItemDeleted(OnItemDeletedListener onItemDeleted) {
+        mOnItemDeleted = onItemDeleted;
     }
 
     @Override
@@ -66,6 +82,14 @@ public class ArduinoItemRecyclerAdapter extends RecyclerView.Adapter<ArduinoItem
     }
 
     public void addAll(List<ArduinoItem> list) {
-        list.addAll(list);
+        this.list.addAll(list);
+    }
+
+    public interface OnItemEditedListener {
+        void onItemEdited(ArduinoItem item);
+    }
+
+    public interface OnItemDeletedListener {
+        void onItemDeleted(ArduinoItem item);
     }
 }

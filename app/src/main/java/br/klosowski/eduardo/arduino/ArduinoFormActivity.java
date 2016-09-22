@@ -14,6 +14,8 @@ public class ArduinoFormActivity extends AppCompatActivity {
     private EditText editUrl;
     private Button buttonSave;
 
+    private long id;
+    private ArduinoItem item;
     private ArduinoItemDAO itemDAO;
 
     @Override
@@ -39,12 +41,23 @@ public class ArduinoFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArduinoItem arduino = new ArduinoItem();
+                if (id != 0) {
+                    arduino.setId(id);
+                }
                 arduino.setName(editName.getText().toString());
                 arduino.setUrl(editUrl.getText().toString());
-                itemDAO.add(arduino);
-                onBackPressed();
+                itemDAO.save(arduino);
+                setResult(RESULT_OK);
+                finish();
             }
         });
+
+        id = getIntent().getLongExtra("id", 0);
+        if (id != 0) {
+            item = itemDAO.get(id);
+            editName.setText(item.getName());
+            editUrl.setText(item.getUrl());
+        }
     }
 
     @Override

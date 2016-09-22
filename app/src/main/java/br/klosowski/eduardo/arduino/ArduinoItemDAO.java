@@ -30,8 +30,26 @@ public class ArduinoItemDAO {
         db = helper.getWritableDatabase();
     }
 
-    public long add(ArduinoItem item) {
+    public long save(ArduinoItem item) {
+        if (item.getId() != 0) {
+            return update(item);
+        } else {
+            return add(item);
+        }
+    }
+
+    private long add(ArduinoItem item) {
         return db.insert(TABLE, null, toContent(item));
+    }
+
+    private long update(ArduinoItem item) {
+        db.update(TABLE, toContent(item),
+                "id = ?", new String[]{Long.toString(item.getId())});
+        return item.getId();
+    }
+
+    public void delete(ArduinoItem item) {
+        db.delete(TABLE, "id = ?", new String[]{Long.toString(item.getId())});
     }
 
     public ArduinoItem get(long id) {
@@ -39,7 +57,7 @@ public class ArduinoItemDAO {
         ArduinoItem item = null;
         try {
             cursor = db.query(TABLE, ALL_COLUMNS,
-                    "id = ?", new String[] {new Long(id).toString()},
+                    "id = ?", new String[] {Long.toString(id)},
                     null, null, null, "1");
             if (cursor.moveToFirst()) {
                 item = toObject(cursor);
@@ -80,7 +98,6 @@ public class ArduinoItemDAO {
 
     private ContentValues toContent(ArduinoItem item) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_ID, item.getId());
         content.put(COLUMN_NAME, item.getName());
         content.put(COLUMN_URL, item.getUrl());
         return content;

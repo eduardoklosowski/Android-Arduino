@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class ArduinoListActivity extends AppCompatActivity {
+    private static final int UPDATE_LIST = 1;
+
     private ArduinoItemDAO itemDAO;
     private ArduinoItemRecyclerAdapter adapter;
 
@@ -30,6 +32,20 @@ public class ArduinoListActivity extends AppCompatActivity {
 
         itemDAO = new ArduinoItemDAO(this);
         adapter = new ArduinoItemRecyclerAdapter(this, itemDAO.getAll());
+        adapter.setOnItemEdited(new ArduinoItemRecyclerAdapter.OnItemEditedListener() {
+            @Override
+            public void onItemEdited(ArduinoItem item) {
+                Intent intent = new Intent(ArduinoListActivity.this, ArduinoFormActivity.class);
+                intent.putExtra("id", item.getId());
+                startActivityForResult(intent, UPDATE_LIST);
+            }
+        });
+        adapter.setOnItemDeleted(new ArduinoItemRecyclerAdapter.OnItemDeletedListener() {
+            @Override
+            public void onItemDeleted(ArduinoItem item) {
+                updateList();
+            }
+        });
 
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -51,13 +67,20 @@ public class ArduinoListActivity extends AppCompatActivity {
                 return true;
             case R.id.add:
                 Intent intent = new Intent(ArduinoListActivity.this, ArduinoFormActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, UPDATE_LIST);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateList() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == UPDATE_LIST && resultCode == RESULT_OK) {
+            updateList();
+        }
+    }
+
+    private void updateList() {
         adapter.clear();
         adapter.addAll(itemDAO.getAll());
         adapter.notifyDataSetChanged();
