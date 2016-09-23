@@ -36,6 +36,7 @@ public class SensorItemRecyclerAdapter extends RecyclerView.Adapter<SensorItemVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SensorFormActivity.class);
+                intent.putExtra("id", item.getId());
                 context.startActivity(intent);
             }
         });

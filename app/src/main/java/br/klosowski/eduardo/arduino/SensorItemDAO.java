@@ -36,8 +36,26 @@ public class SensorItemDAO {
         db = helper.getWritableDatabase();
     }
 
+    public long save(SensorItem item) {
+        if (item.getId() != 0) {
+            return update(item);
+        } else {
+            return add(item);
+        }
+    }
+
     public long add(SensorItem item) {
         return db.insert(TABLE, null, toContent(item));
+    }
+
+    private long update(SensorItem item) {
+        db.update(TABLE, toContent(item),
+                "id = ?", new String[]{Long.toString(item.getId())});
+        return item.getId();
+    }
+
+    public void delete(SensorItem item) {
+        db.delete(TABLE, "id = ?", new String[]{Long.toString(item.getId())});
     }
 
     public SensorItem get(long id) {
@@ -83,7 +101,7 @@ public class SensorItemDAO {
         item.setArduino(arduinoItemDAO.get(cursor.getLong(cursor.getColumnIndex(COLUMN_ARDUINO))));
         String type = cursor.getString(cursor.getColumnIndex(COLUMN_TYPE));
         if (type.equals(ArduinoType.Analogical.getId())) {
-            item.setType(ArduinoType.Analogical.Analogical);
+            item.setType(ArduinoType.Analogical);
         } else if (type.equals(ArduinoType.Digital.getId())) {
             item.setType(ArduinoType.Digital);
         }
@@ -99,7 +117,6 @@ public class SensorItemDAO {
 
     private ContentValues toContent(SensorItem item) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_ID, item.getId());
         content.put(COLUMN_NAME, item.getName());
         content.put(COLUMN_ARDUINO, item.getArduino().getId());
         content.put(COLUMN_TYPE, item.getType().getId());

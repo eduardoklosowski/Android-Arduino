@@ -15,6 +15,11 @@ public class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHo
         this.list = list;
     }
 
+    /*@Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }*/
+
     @Override
     public MainItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main, parent, false);
