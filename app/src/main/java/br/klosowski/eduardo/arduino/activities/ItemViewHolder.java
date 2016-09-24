@@ -1,16 +1,18 @@
-package br.klosowski.eduardo.arduino;
+package br.klosowski.eduardo.arduino.activities;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ArduinoItemViewHolder extends RecyclerView.ViewHolder {
-    public TextView textName;
-    public ImageView buttonEdit;
-    public ImageView buttonDelete;
+import br.klosowski.eduardo.arduino.R;
 
-    public ArduinoItemViewHolder(View itemView) {
+class ItemViewHolder extends RecyclerView.ViewHolder {
+    TextView textName;
+    ImageView buttonEdit;
+    ImageView buttonDelete;
+
+    ItemViewHolder(View itemView) {
         super(itemView);
         textName = (TextView) itemView.findViewById(R.id.name);
         buttonEdit = (ImageView) itemView.findViewById(R.id.edit);

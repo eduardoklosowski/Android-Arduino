@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino;
+package br.klosowski.eduardo.arduino.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.klosowski.eduardo.arduino.models.ArduinoItem;
-import br.klosowski.eduardo.arduino.models.SensorItem;
-import br.klosowski.eduardo.arduino.models.SensorType;
+import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.models.SensorItemDAO;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -27,9 +23,11 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
+        SensorItemDAO sensorItemDAO = new SensorItemDAO(this);
+
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new MainItemRecyclerAdapter(this, getSensorList()));
+        list.setAdapter(new MainItemRecyclerAdapter(this, sensorItemDAO.getAll()));
     }
 
     @Override
@@ -53,30 +51,5 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private List<SensorItem> getSensorList() {
-        List<SensorItem> list = new ArrayList<>();
-
-        ArduinoItem a = new ArduinoItem();
-        a.setName("Arduino");
-
-        SensorItem s = new SensorItem();
-        s.setId(1);
-        s.setName("Sensor 1");
-        s.setArduino(a);
-        s.setType(SensorType.Digital);
-        s.setPort(0);
-        list.add(s);
-
-        s = new SensorItem();
-        s.setId(2);
-        s.setName("Sensor 2");
-        s.setArduino(a);
-        s.setType(SensorType.Digital);
-        s.setPort(0);
-        list.add(s);
-
-        return list;
     }
 }

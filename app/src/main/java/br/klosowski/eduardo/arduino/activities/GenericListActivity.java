@@ -1,5 +1,6 @@
-package br.klosowski.eduardo.arduino;
+package br.klosowski.eduardo.arduino.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,42 +12,61 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import br.klosowski.eduardo.arduino.activities.ArduinoFormActivity;
-import br.klosowski.eduardo.arduino.models.ArduinoItem;
-import br.klosowski.eduardo.arduino.models.ArduinoItemDAO;
+import java.util.List;
 
-public class ArduinoListActivity extends AppCompatActivity {
+import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.models.Item;
+import br.klosowski.eduardo.arduino.models.ItemDAO;
+
+public abstract class GenericListActivity<I extends Item> extends AppCompatActivity {
     private static final int UPDATE_LIST = 1;
 
-    private ArduinoItemDAO itemDAO;
-    private ArduinoItemRecyclerAdapter adapter;
+    private ItemDAO<I> itemDAO;
+    private GenericItemRecyclerAdapter<I> adapter;
+
+    public GenericListActivity() {
+        itemDAO = getItemDAO();
+    }
+
+    abstract protected int getActivityTitle();
+
+    abstract protected Class getFormActivityClass();
+
+    abstract protected GenericItemRecyclerAdapter<I> getRecyclerAdapter(Context context,
+                                                                        List<I> items);
+
+    abstract protected ItemDAO<I> getItemDAO();
+
+    private void updateList() {
+        adapter.setList(itemDAO.getAll());
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arduino_list);
+        setContentView(R.layout.activity_generic_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.arduinos);
+        toolbar.setTitle(getActivityTitle());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        itemDAO = new ArduinoItemDAO(this);
-        adapter = new ArduinoItemRecyclerAdapter(this, itemDAO.getAll());
-        adapter.setOnItemEdited(new ArduinoItemRecyclerAdapter.OnItemEditedListener() {
+        adapter = getRecyclerAdapter(this, itemDAO.getAll());
+        adapter.setOnItemEdited(new GenericItemRecyclerAdapter.OnItemEditedListener() {
             @Override
-            public void onItemEdited(ArduinoItem item) {
-                Intent intent = new Intent(ArduinoListActivity.this, ArduinoFormActivity.class);
+            public void onItemEdited(Item item) {
+                Intent intent = new Intent(GenericListActivity.this, getFormActivityClass());
                 intent.putExtra("id", item.getId());
                 startActivityForResult(intent, UPDATE_LIST);
             }
         });
-        adapter.setOnItemDeleted(new ArduinoItemRecyclerAdapter.OnItemDeletedListener() {
+        adapter.setOnItemDeleted(new GenericItemRecyclerAdapter.OnItemDeletedListener() {
             @Override
-            public void onItemDeleted(ArduinoItem item) {
+            public void onItemDeleted(Item item) {
                 updateList();
             }
         });
@@ -70,7 +90,7 @@ public class ArduinoListActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.add:
-                Intent intent = new Intent(ArduinoListActivity.this, ArduinoFormActivity.class);
+                Intent intent = new Intent(GenericListActivity.this, getFormActivityClass());
                 startActivityForResult(intent, UPDATE_LIST);
                 return true;
         }
@@ -82,11 +102,5 @@ public class ArduinoListActivity extends AppCompatActivity {
         if (requestCode == UPDATE_LIST && resultCode == RESULT_OK) {
             updateList();
         }
-    }
-
-    private void updateList() {
-        adapter.clear();
-        adapter.addAll(itemDAO.getAll());
-        adapter.notifyDataSetChanged();
     }
 }

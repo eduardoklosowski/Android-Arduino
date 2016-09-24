@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino;
+package br.klosowski.eduardo.arduino.activities;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import br.klosowski.eduardo.arduino.R;
 import br.klosowski.eduardo.arduino.models.SensorItem;
 
 public class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {

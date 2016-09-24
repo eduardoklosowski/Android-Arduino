@@ -11,21 +11,25 @@ import android.widget.EditText;
 
 import br.klosowski.eduardo.arduino.R;
 import br.klosowski.eduardo.arduino.models.Item;
+import br.klosowski.eduardo.arduino.models.ItemDAO;
 
-public abstract class GenericFormActivity extends AppCompatActivity {
-    protected EditText editName;
-
+public abstract class GenericFormActivity<I extends Item> extends AppCompatActivity {
     protected long id;
+    private ItemDAO<I> itemDAO;
+
+    protected EditText editName;
 
     abstract protected int getLayout();
 
     abstract protected int getActivityTitle();
 
-    abstract void getElementsFromLayout();
+    abstract protected ItemDAO<I> getItemDAO();
 
-    abstract protected void save();
+    abstract void populateElementsFromLayout();
 
-    abstract void loadItem(long id);
+    abstract void populateFields(I item);
+
+    abstract protected I getItem();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +44,23 @@ public abstract class GenericFormActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        itemDAO = getItemDAO();
+
         Button buttonSave = (Button) findViewById(R.id.save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
+                itemDAO.save(getItem());
                 setResult(RESULT_OK);
                 finish();
             }
         });
 
-        getElementsFromLayout();
+        populateElementsFromLayout();
 
-        long id = getIntent().getLongExtra("id", Item.NEW_ID);
+        id = getIntent().getLongExtra("id", Item.NEW_ID);
         if (id != Item.NEW_ID) {
-            loadItem(id);
+            populateFields(itemDAO.get(id));
         }
     }
 

@@ -34,7 +34,7 @@
                     android:id="@+id/name"
                     android:layout_weight="1"
                     android:inputType="text"
-                    android:singleLine="true" />
+                    android:maxLines="1" />
             </TableRow>
 
             <TableRow>
