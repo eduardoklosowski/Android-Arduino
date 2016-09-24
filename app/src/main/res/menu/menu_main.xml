@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/menu_arduino"
-        android:title="Arduinos" />
+        android:title="@string/arduinos" />
 
     <item android:id="@+id/menu_sensor"
-        android:title="Sensores" />
+        android:title="@string/sensors" />
 </menu>
