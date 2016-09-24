@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import br.klosowski.eduardo.arduino.activities.SensorFormActivity;
+import br.klosowski.eduardo.arduino.models.SensorItem;
+
 public class SensorItemRecyclerAdapter extends RecyclerView.Adapter<SensorItemViewHolder> {
     private List<SensorItem> list;
     private Context context;

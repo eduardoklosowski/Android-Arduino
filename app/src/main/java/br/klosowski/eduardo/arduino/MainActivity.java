@@ -1,8 +1,8 @@
 package br.klosowski.eduardo.arduino;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +12,10 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.klosowski.eduardo.arduino.models.ArduinoItem;
+import br.klosowski.eduardo.arduino.models.SensorItem;
+import br.klosowski.eduardo.arduino.models.SensorType;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         s.setId(1);
         s.setName("Sensor 1");
         s.setArduino(a);
-        s.setType(ArduinoType.Digital);
+        s.setType(SensorType.Digital);
         s.setPort(0);
         list.add(s);
 
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         s.setId(2);
         s.setName("Sensor 2");
         s.setArduino(a);
-        s.setType(ArduinoType.Digital);
+        s.setType(SensorType.Digital);
         s.setPort(0);
         list.add(s);
 

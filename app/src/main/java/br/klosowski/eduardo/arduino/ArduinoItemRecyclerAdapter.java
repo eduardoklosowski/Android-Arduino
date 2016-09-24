@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import br.klosowski.eduardo.arduino.models.ArduinoItem;
+import br.klosowski.eduardo.arduino.models.ArduinoItemDAO;
+
 public class ArduinoItemRecyclerAdapter extends RecyclerView.Adapter<ArduinoItemViewHolder> {
     private List<ArduinoItem> list;
     private Context context;

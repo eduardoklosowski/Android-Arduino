@@ -1,15 +1,18 @@
 package br.klosowski.eduardo.arduino;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import br.klosowski.eduardo.arduino.activities.SensorFormActivity;
+import br.klosowski.eduardo.arduino.models.SensorItemDAO;
 
 public class SensorListActivity extends AppCompatActivity {
     private SensorItemDAO itemDAO;

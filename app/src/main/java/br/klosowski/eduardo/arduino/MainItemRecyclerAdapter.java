@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import br.klosowski.eduardo.arduino.models.SensorItem;
+
 public class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
     private List<SensorItem> list;
 

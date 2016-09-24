@@ -1,62 +1,60 @@
-package br.klosowski.eduardo.arduino;
+package br.klosowski.eduardo.arduino.activities;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ArduinoFormActivity extends AppCompatActivity {
-    private EditText editName;
-    private EditText editUrl;
-    private Button buttonSave;
+import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.models.Item;
 
-    private long id;
-    private ArduinoItem item;
-    private ArduinoItemDAO itemDAO;
+public abstract class GenericFormActivity extends AppCompatActivity {
+    protected EditText editName;
+
+    protected long id;
+
+    abstract protected int getLayout();
+
+    abstract protected int getActivityTitle();
+
+    abstract void getElementsFromLayout();
+
+    abstract protected void save();
+
+    abstract void loadItem(long id);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arduino_form);
+        setContentView(getLayout());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.arduino);
+        toolbar.setTitle(getActivityTitle());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        itemDAO = new ArduinoItemDAO(this);
-
-        editName = (EditText) findViewById(R.id.name);
-        editUrl = (EditText) findViewById(R.id.url);
-
-        buttonSave = (Button) findViewById(R.id.save);
+        Button buttonSave = (Button) findViewById(R.id.save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArduinoItem arduino = new ArduinoItem();
-                if (id != 0) {
-                    arduino.setId(id);
-                }
-                arduino.setName(editName.getText().toString());
-                arduino.setUrl(editUrl.getText().toString());
-                itemDAO.save(arduino);
+                save();
                 setResult(RESULT_OK);
                 finish();
             }
         });
 
-        id = getIntent().getLongExtra("id", 0);
-        if (id != 0) {
-            item = itemDAO.get(id);
-            editName.setText(item.getName());
-            editUrl.setText(item.getUrl());
+        getElementsFromLayout();
+
+        long id = getIntent().getLongExtra("id", Item.NEW_ID);
+        if (id != Item.NEW_ID) {
+            loadItem(id);
         }
     }
 

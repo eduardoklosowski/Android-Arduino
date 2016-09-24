@@ -1,9 +1,10 @@
-package br.klosowski.eduardo.arduino;
+package br.klosowski.eduardo.arduino.models;
 
-public class ArduinoItem {
-    private long id;
+public abstract class Item {
+    public static final long NEW_ID = 0;
+
+    private long id = NEW_ID;
     private String name;
-    private String url;
 
     public String toString() {
         return name;
@@ -23,13 +24,5 @@ public class ArduinoItem {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

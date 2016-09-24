@@ -31,8 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT NOT NULL, " +
                 "arduino INTEGER NOT NULL REFERENCES arduino (id), " +
-                "type TEXT NOT NULL, " +
-                "direction TEXT NOT NULL, " +
+                "type INTEGER NOT NULL, " +
+                "direction INTEGER NOT NULL, " +
                 "port INTEGER NOT NULL);");
     }
 
