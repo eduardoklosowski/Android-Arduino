@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -73,7 +72,6 @@ public class SensorFormActivity extends AppCompatActivity {
                 }
                 sensor.setName(editName.getText().toString());
                 sensor.setArduino((ArduinoItem) editArduino.getSelectedItem());
-                Log.d("FORM", "Save: " + sensor.getArduino().getId());
                 switch (editType.getCheckedRadioButtonId()) {
                     case R.id.type_digital:
                         sensor.setType(ArduinoType.Digital);
@@ -100,13 +98,9 @@ public class SensorFormActivity extends AppCompatActivity {
         id = getIntent().getLongExtra("id", 0);
         if (id != 0) {
             item = itemDAO.get(id);
-            Log.d("FORM", "Arduino: " + item.getArduino().getId());
             editName.setText(item.getName());
-            Log.d("LOAD", "ID item: " + item.getId());
             for (int i = arduinosList.size(); i-- > 0;) {
-                Log.d("FOR", "item: " + arduinosList.get(i).getId());
-                if (arduinosList.get(i).getId() == item.getId()) {
-                    Log.d("FOR", "esse " + i);
+                if (arduinosList.get(i).getId() == item.getArduino().getId()) {
                     editArduino.setSelection(i);
                     break;
                 }
