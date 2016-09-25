@@ -25,6 +25,10 @@ class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
         this.list = list;
     }
 
+    RunningSensor getItem(int position) {
+        return list.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return list.size();

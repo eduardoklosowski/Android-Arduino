@@ -27,7 +27,7 @@ public class RunningSensor {
         this.value = value;
     }
 
-    void requestValue() {
+    public void requestValue() {
         new GetValue(this).execute();
     }
 

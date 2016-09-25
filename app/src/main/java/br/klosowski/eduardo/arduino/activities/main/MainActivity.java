@@ -10,9 +10,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import br.klosowski.eduardo.arduino.R;
 import br.klosowski.eduardo.arduino.activities.arduino.ArduinoListActivity;
 import br.klosowski.eduardo.arduino.activities.sensor.SensorListActivity;
+import br.klosowski.eduardo.arduino.models.RunningSensor;
 import br.klosowski.eduardo.arduino.models.RunningSensorDAO;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,9 +24,18 @@ public class MainActivity extends AppCompatActivity {
 
     private RunningSensorDAO rSensorDAO;
     private MainItemRecyclerAdapter adapter;
+    private Timer autoUpdate;
 
     private void updateList() {
         adapter.setList(rSensorDAO.getAll());
+        adapter.notifyDataSetChanged();
+    }
+
+    private void requestValues() {
+        for (int i = adapter.getItemCount(); i-- > 0; ) {
+            RunningSensor rSensor = adapter.getItem(i);
+            rSensor.requestValue();
+        }
         adapter.notifyDataSetChanged();
     }
 
@@ -42,6 +55,29 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        autoUpdate = new Timer();
+        autoUpdate.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestValues();
+                    }
+                });
+            }
+        }, 0, 10000);
+    }
+
+    @Override
+    protected void onPause() {
+        autoUpdate.cancel();
+        super.onPause();
     }
 
     @Override
