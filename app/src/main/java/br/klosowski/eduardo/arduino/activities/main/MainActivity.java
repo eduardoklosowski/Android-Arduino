@@ -16,6 +16,16 @@ import br.klosowski.eduardo.arduino.activities.sensor.SensorListActivity;
 import br.klosowski.eduardo.arduino.models.SensorItemDAO;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int UPDATE_LIST = 1;
+
+    private SensorItemDAO sensorItemDAO;
+    private MainItemRecyclerAdapter adapter;
+
+    private void updateList() {
+        adapter.setList(sensorItemDAO.getAll());
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +35,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
-        SensorItemDAO sensorItemDAO = new SensorItemDAO(this);
+        sensorItemDAO = new SensorItemDAO(this);
+
+        adapter = new MainItemRecyclerAdapter(this, sensorItemDAO.getAll());
 
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new MainItemRecyclerAdapter(this, sensorItemDAO.getAll()));
+        list.setAdapter(adapter);
     }
 
     @Override
@@ -45,13 +57,20 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_arduino:
                 intent = new Intent(MainActivity.this, ArduinoListActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, UPDATE_LIST);
                 return true;
             case R.id.menu_sensor:
                 intent = new Intent(MainActivity.this, SensorListActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, UPDATE_LIST);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == UPDATE_LIST) {
+            updateList();
+        }
     }
 }
