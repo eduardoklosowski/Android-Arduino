@@ -15,7 +15,9 @@ public class RunningSensorDAO {
     public List<RunningSensor> getAll() {
         List<RunningSensor> list = new ArrayList<>();
         for (SensorItem sensor : sensorItemDAO.getAll()) {
-            list.add(new RunningSensor(sensor));
+            RunningSensor rSensor = new RunningSensor(sensor);
+            rSensor.requestValue();
+            list.add(rSensor);
         }
         return list;
     }

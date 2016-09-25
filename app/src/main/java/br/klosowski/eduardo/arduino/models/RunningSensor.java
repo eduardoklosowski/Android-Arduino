@@ -1,5 +1,8 @@
 package br.klosowski.eduardo.arduino.models;
 
+import br.klosowski.eduardo.arduino.api.GetValue;
+import br.klosowski.eduardo.arduino.api.SetValue;
+
 public class RunningSensor {
     private SensorItem sensor;
     private int value = 0;
@@ -22,5 +25,13 @@ public class RunningSensor {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    void requestValue() {
+        new GetValue(this).execute();
+    }
+
+    public void putValue(int value) {
+        new SetValue(this, value).execute();
     }
 }

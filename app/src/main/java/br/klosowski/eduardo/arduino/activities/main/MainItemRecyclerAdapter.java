@@ -82,7 +82,7 @@ class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
                         if (checkValue.isChecked()) {
                             value = 1;
                         }
-                        rSensor.setValue(value);
+                        rSensor.putValue(value);
                     }
                 });
             }
@@ -102,7 +102,7 @@ class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
                         if (!textValue.isEmpty()) {
                             value = Integer.parseInt(textValue);
                         }
-                        rSensor.setValue(value);
+                        rSensor.putValue(value);
                     }
 
                     @Override
