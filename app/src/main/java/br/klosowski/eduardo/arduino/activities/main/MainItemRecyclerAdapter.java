@@ -13,10 +13,6 @@ import br.klosowski.eduardo.arduino.models.SensorItem;
 import br.klosowski.eduardo.arduino.models.SensorType;
 
 class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
-    private static final int TYPE_DIGITAL = 0x0;
-    private static final int TYPE_ANALOGICAL = 0x2;
-    private static final int DIRECTION_INPUT = 0x0;
-    private static final int DIRECTION_OUTPUT = 0x1;
     private List<SensorItem> list;
 
     MainItemRecyclerAdapter(Context context, List<SensorItem> list) {
@@ -36,29 +32,28 @@ class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
     @Override
     public int getItemViewType(int position) {
         SensorItem sensor = list.get(position);
-        int viewType = 0;
-
         long typeId = sensor.getType().getId();
-        if (typeId == SensorType.Digital.getId()) {
-            viewType |= TYPE_DIGITAL;
-        } else if (typeId == SensorType.Analogical.getId()) {
-            viewType |= TYPE_ANALOGICAL;
-        }
-
         long directionId = sensor.getDirection().getId();
-        if (directionId == SensorDirection.Input.getId()) {
-            viewType |= DIRECTION_INPUT;
-        } else if (directionId == SensorDirection.Output.getId()) {
-            viewType |= DIRECTION_OUTPUT;
-        }
 
-        return viewType;
+        if (typeId == SensorType.Digital.getId()) {
+            if (directionId == SensorDirection.Input.getId()) {
+                return R.layout.item_main_digital_input;
+            } else {
+                return R.layout.item_main_digital_output;
+            }
+        } else {
+            if (directionId == SensorDirection.Input.getId()) {
+                return R.layout.item_main_analogical_input;
+            } else {
+                return R.layout.item_main_analogical_output;
+            }
+        }
     }
 
     @Override
     public MainItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MainItemViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_main, parent, false));
+                .inflate(viewType, parent, false));
     }
 
     @Override
