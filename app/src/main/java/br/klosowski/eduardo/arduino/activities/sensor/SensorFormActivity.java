@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.sensor;
 
 import android.support.v7.widget.AppCompatSpinner;
 import android.widget.ArrayAdapter;
@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import java.util.List;
 
 import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.activities.generics.GenericFormActivity;
 import br.klosowski.eduardo.arduino.models.ArduinoItem;
 import br.klosowski.eduardo.arduino.models.ArduinoItemDAO;
 import br.klosowski.eduardo.arduino.models.SensorDirection;
@@ -64,7 +65,7 @@ public class SensorFormActivity extends GenericFormActivity<SensorItem> {
     }
 
     @Override
-    void populateElementsFromLayout() {
+    protected void populateElementsFromLayout() {
         editName = (EditText) findViewById(R.id.name);
         editArduino = (AppCompatSpinner) findViewById(R.id.arduino);
         editArduino.setAdapter(new ArrayAdapter<>(this,

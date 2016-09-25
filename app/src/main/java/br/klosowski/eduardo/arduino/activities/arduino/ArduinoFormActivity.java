@@ -1,8 +1,9 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.arduino;
 
 import android.widget.EditText;
 
 import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.activities.generics.GenericFormActivity;
 import br.klosowski.eduardo.arduino.models.ArduinoItem;
 import br.klosowski.eduardo.arduino.models.ArduinoItemDAO;
 
@@ -25,7 +26,7 @@ public class ArduinoFormActivity extends GenericFormActivity<ArduinoItem> {
     }
 
     @Override
-    void populateElementsFromLayout() {
+    protected void populateElementsFromLayout() {
         editName = (EditText) findViewById(R.id.name);
         editUrl = (EditText) findViewById(R.id.url);
     }

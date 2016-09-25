@@ -1,10 +1,11 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.sensor;
 
 import android.content.Context;
 
 import java.util.List;
 
 import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.activities.generics.GenericListActivity;
 import br.klosowski.eduardo.arduino.models.SensorItem;
 import br.klosowski.eduardo.arduino.models.SensorItemDAO;
 

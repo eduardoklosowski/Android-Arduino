@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.generics;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,7 +22,7 @@ public abstract class GenericItemRecyclerAdapter<I extends Item>
     private OnItemEditedListener mOnItemEdited;
     private OnItemDeletedListener mOnItemDeleted;
 
-    GenericItemRecyclerAdapter(Context context, List<I> list) {
+    public GenericItemRecyclerAdapter(Context context, List<I> list) {
         this.context = context;
         this.list = list;
         itemDAO = getItemDAO(context);
@@ -40,11 +40,11 @@ public abstract class GenericItemRecyclerAdapter<I extends Item>
         this.list.addAll(list);
     }
 
-    public void setOnItemEdited(OnItemEditedListener onItemEdited) {
+    void setOnItemEdited(OnItemEditedListener onItemEdited) {
         mOnItemEdited = onItemEdited;
     }
 
-    public void setOnItemDeleted(OnItemDeletedListener onItemDeleted) {
+    void setOnItemDeleted(OnItemDeletedListener onItemDeleted) {
         mOnItemDeleted = onItemDeleted;
     }
 
@@ -83,11 +83,11 @@ public abstract class GenericItemRecyclerAdapter<I extends Item>
         });
     }
 
-    public interface OnItemEditedListener {
+    interface OnItemEditedListener {
         void onItemEdited(Item item);
     }
 
-    public interface OnItemDeletedListener {
+    interface OnItemDeletedListener {
         void onItemDeleted(Item item);
     }
 }

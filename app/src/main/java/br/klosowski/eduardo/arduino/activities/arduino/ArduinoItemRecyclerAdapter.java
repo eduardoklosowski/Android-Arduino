@@ -1,16 +1,17 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.arduino;
 
 import android.content.Context;
 
 import java.util.List;
 
+import br.klosowski.eduardo.arduino.activities.generics.GenericItemRecyclerAdapter;
 import br.klosowski.eduardo.arduino.models.ArduinoItem;
 import br.klosowski.eduardo.arduino.models.ArduinoItemDAO;
 import br.klosowski.eduardo.arduino.models.ItemDAO;
 
-public class ArduinoItemRecyclerAdapter
+class ArduinoItemRecyclerAdapter
         extends GenericItemRecyclerAdapter<ArduinoItem> {
-    public ArduinoItemRecyclerAdapter(Context context, List<ArduinoItem> list) {
+    ArduinoItemRecyclerAdapter(Context context, List<ArduinoItem> list) {
         super(context, list);
     }
 

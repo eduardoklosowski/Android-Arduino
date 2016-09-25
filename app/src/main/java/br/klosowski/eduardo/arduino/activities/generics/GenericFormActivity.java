@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.generics;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -25,9 +25,9 @@ public abstract class GenericFormActivity<I extends Item> extends AppCompatActiv
 
     abstract protected ItemDAO<I> getItemDAO();
 
-    abstract void populateElementsFromLayout();
+    abstract protected void populateElementsFromLayout();
 
-    abstract void populateFields(I item);
+    abstract protected void populateFields(I item);
 
     abstract protected I getItem();
 

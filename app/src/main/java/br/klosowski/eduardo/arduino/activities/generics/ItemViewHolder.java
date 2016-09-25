@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.generics;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +11,10 @@ import java.util.List;
 import br.klosowski.eduardo.arduino.R;
 import br.klosowski.eduardo.arduino.models.SensorItem;
 
-public class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
+class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
     private List<SensorItem> list;
 
-    public MainItemRecyclerAdapter(Context context, List<SensorItem> list) {
+    MainItemRecyclerAdapter(Context context, List<SensorItem> list) {
         this.list = list;
     }
 

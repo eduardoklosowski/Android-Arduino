@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.activities.arduino.ArduinoListActivity;
+import br.klosowski.eduardo.arduino.activities.sensor.SensorListActivity;
 import br.klosowski.eduardo.arduino.models.SensorItemDAO;
 
 public class MainActivity extends AppCompatActivity {

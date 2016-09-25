@@ -1,4 +1,4 @@
-package br.klosowski.eduardo.arduino.activities;
+package br.klosowski.eduardo.arduino.activities.generics;
 
 import android.content.Context;
 import android.content.Intent;
