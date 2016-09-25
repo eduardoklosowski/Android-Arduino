@@ -8,9 +8,11 @@ import br.klosowski.eduardo.arduino.R;
 
 class MainItemViewHolder extends RecyclerView.ViewHolder {
     TextView textName;
+    View viewValue;
 
     MainItemViewHolder(View itemView) {
         super(itemView);
         textName = (TextView) itemView.findViewById(R.id.name);
+        viewValue = itemView.findViewById(R.id.value);
     }
 }

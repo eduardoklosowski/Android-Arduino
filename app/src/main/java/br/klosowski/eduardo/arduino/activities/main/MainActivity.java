@@ -13,16 +13,16 @@ import android.view.MenuItem;
 import br.klosowski.eduardo.arduino.R;
 import br.klosowski.eduardo.arduino.activities.arduino.ArduinoListActivity;
 import br.klosowski.eduardo.arduino.activities.sensor.SensorListActivity;
-import br.klosowski.eduardo.arduino.models.SensorItemDAO;
+import br.klosowski.eduardo.arduino.models.RunningSensorDAO;
 
 public class MainActivity extends AppCompatActivity {
     private static final int UPDATE_LIST = 1;
 
-    private SensorItemDAO sensorItemDAO;
+    private RunningSensorDAO rSensorDAO;
     private MainItemRecyclerAdapter adapter;
 
     private void updateList() {
-        adapter.setList(sensorItemDAO.getAll());
+        adapter.setList(rSensorDAO.getAll());
         adapter.notifyDataSetChanged();
     }
 
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
-        sensorItemDAO = new SensorItemDAO(this);
+        rSensorDAO = new RunningSensorDAO(this);
 
-        adapter = new MainItemRecyclerAdapter(this, sensorItemDAO.getAll());
+        adapter = new MainItemRecyclerAdapter(this, rSensorDAO.getAll());
 
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));

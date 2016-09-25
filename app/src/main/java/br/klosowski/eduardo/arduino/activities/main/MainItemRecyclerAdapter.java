@@ -4,18 +4,21 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import java.util.List;
 
 import br.klosowski.eduardo.arduino.R;
+import br.klosowski.eduardo.arduino.models.RunningSensor;
 import br.klosowski.eduardo.arduino.models.SensorDirection;
 import br.klosowski.eduardo.arduino.models.SensorItem;
 import br.klosowski.eduardo.arduino.models.SensorType;
 
 class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
-    private List<SensorItem> list;
+    private List<RunningSensor> list;
 
-    MainItemRecyclerAdapter(Context context, List<SensorItem> list) {
+    MainItemRecyclerAdapter(Context context, List<RunningSensor> list) {
         this.list = list;
     }
 
@@ -24,14 +27,15 @@ class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
         return list.size();
     }
 
-    public void setList(List<SensorItem> list) {
+    public void setList(List<RunningSensor> list) {
         this.list.clear();
         this.list.addAll(list);
     }
 
     @Override
     public int getItemViewType(int position) {
-        SensorItem sensor = list.get(position);
+        RunningSensor rSensor = list.get(position);
+        SensorItem sensor = rSensor.getSensor();
         long typeId = sensor.getType().getId();
         long directionId = sensor.getDirection().getId();
 
@@ -58,8 +62,16 @@ class MainItemRecyclerAdapter extends RecyclerView.Adapter<MainItemViewHolder> {
 
     @Override
     public void onBindViewHolder(MainItemViewHolder holder, int position) {
-        final SensorItem item = list.get(position);
+        final RunningSensor rSensor = list.get(position);
+        final SensorItem sensor = rSensor.getSensor();
 
-        holder.textName.setText(item.getName());
+        holder.textName.setText(sensor.getName());
+        if (sensor.getType().getId() == SensorType.Digital.getId()) {
+            CheckBox checkValue = (CheckBox) holder.viewValue;
+            checkValue.setChecked(rSensor.getValue() == 1);
+        } else {
+            EditText editValue = (EditText) holder.viewValue;
+            editValue.setText(Integer.toString(rSensor.getValue()));
+        }
     }
 }
