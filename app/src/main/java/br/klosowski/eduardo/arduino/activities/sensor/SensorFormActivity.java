@@ -114,7 +114,12 @@ public class SensorFormActivity extends GenericFormActivity<SensorItem> {
             direction = SensorDirection.Output;
         }
         sensor.setDirection(direction);
-        sensor.setPort(Integer.parseInt(editPort.getText().toString()));
+        String textPort = editPort.getText().toString();
+        int port = 0;
+        if (!textPort.isEmpty()) {
+            port = Integer.parseInt(textPort);
+        }
+        sensor.setPort(port);
         return sensor;
     }
 }
